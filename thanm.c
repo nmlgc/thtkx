@@ -305,7 +305,7 @@ static const id_format_pair_t formats_v8[] = {
     { 122, "SS" },
     { 124, "ff" },
     { 125, "ff" },
-    { 130, "SSSS" },
+    { 130, "ffff" },
     { 131, "ffff" },
     { 200, "SS" },
     { 201, "SSS" },
@@ -399,6 +399,7 @@ convert_header_to_old(
     header->unknown1 = th11.unknown1;
     header->thtxoffset = th11.thtxoffset;
     header->hasdata = th11.hasdata;
+    header->unknown2 = th11.unknown2;
     header->nextoffset = th11.nextoffset;
     header->zero3 = 0;
 }
@@ -424,6 +425,7 @@ convert_header_to_11(
     th11->unknown1 = header.unknown1;
     th11->thtxoffset = header.thtxoffset;
     th11->hasdata = header.hasdata;
+    th11->unknown2 = header.unknown2;
     th11->nextoffset = header.nextoffset;
 }
 #endif
@@ -638,6 +640,8 @@ anm_dump(
             fprintf(stream, "Zero3: %u\n", entry->header->zero3);
         if (entry->header->unknown1 != 0)
             fprintf(stream, "Unknown1: %u\n", entry->header->unknown1);
+        if (entry->header->unknown2 != 0)
+            fprintf(stream, "Unknown2: %u\n", entry->header->unknown2);
         if (entry->header->hasdata) {
             fprintf(stream, "HasData: %u\n", entry->header->hasdata);
             fprintf(stream, "THTX-Size: %u\n", entry->thtx->size);
@@ -994,7 +998,8 @@ anm_create(
             sscanf(linep, "Zero2: %u", &entry->header->zero2);
             sscanf(linep, "Zero3: %u", &entry->header->zero3);
             sscanf(linep, "Unknown1: %u", &entry->header->unknown1);
-            sscanf(linep, "HasData: %u", &entry->header->hasdata);
+            sscanf(linep, "Unknown2: %hu", &entry->header->unknown2);
+            sscanf(linep, "HasData: %hu", &entry->header->hasdata);
             sscanf(linep, "THTX-Size: %u", &entry->thtx->size);
             sscanf(linep, "THTX-Format: %hu", &entry->thtx->format);
             sscanf(linep, "THTX-Width: %hu", &entry->thtx->w);

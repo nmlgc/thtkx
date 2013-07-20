@@ -125,6 +125,8 @@ typedef struct {
     uint32_t unknown1;
     uint32_t thtxoffset;
     uint16_t hasdata;
+    /* TH14 starts using what was previously thought */
+    /* to be the upper 2 bytes of hasdata for something else. */
     uint16_t unknown2;
     uint32_t nextoffset;
     uint32_t zero3;
